@@ -1,0 +1,19 @@
+{
+  "name": "beb-04-4runtsea",
+  "version": "1.0.0",
+  "description": "beb-04-first-04",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/minwoogramer/beb-04-4runtsea.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/minwoogramer/beb-04-4runtsea/issues"
+  },
+  "homepage": "https://github.com/minwoogramer/beb-04-4runtsea#readme"
+}
