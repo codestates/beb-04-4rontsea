@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/minwoogramer/beb-04-4runtsea/issues"
   },
-  "homepage": "https://github.com/minwoogramer/beb-04-4runtsea#readme"
+  "homepage": "https://github.com/minwoogramer/beb-04-4runtsea#readme",
+  "dependencies": {
+    "react-responsive-carousel": "^3.2.23"
+  }
 }
