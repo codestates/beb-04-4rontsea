@@ -10,14 +10,14 @@ const Header = styled.header`
   z-index: 1000;
   width: 100%;
   height: 80px;
-  background-color: #dddd;
+  background-color: #1f2023;
   position: fixed;
 `;
 
 const Title = styled.a`
   cursor: pointer;
   font-size: 3em;
-  color: #1175e7;
+  color: #08b7ff;
   font-family: "Palatino Linotype";
   font-weight: 600;
 `;
@@ -39,7 +39,7 @@ const Btn = styled.a`
   border-radius: ${(props) => (props.primary ? "20px" : "")};
   width: ${(props) => (props.primary ? "6em" : "2em")};
   opacity: ${(props) => (props.primary ? "0.9" : "0.8")};
-  color: #1f2023;
+  color: #dddd;
   font-size: 1.5em;
   font-weight: 500;
   display: flex;
@@ -50,7 +50,6 @@ const Btn = styled.a`
   transition: 0.2s;
   :hover {
     opacity: 1;
-    font-weight: 650;
   }
   cursor: pointer;
   height: 2em;
@@ -67,7 +66,7 @@ export const NavBar = () => {
         </div>
         <Menu>
           <Link href="/mintNFT">
-            <Btn primary>Mint NFT</Btn>
+            <Btn primary>Create</Btn>
           </Link>
           <Link href="/wallet">
             <Btn>
