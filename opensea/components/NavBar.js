@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faWallet } from "@fortawesome/free-solid-svg-icons";
 // NextJS styled-components https://record22.tistory.com/128
 import styled from "styled-components";
+import { useEffect } from "react";
 
 const Header = styled.header`
   top: 0;
@@ -23,6 +24,25 @@ const Nav = styled.div`
 `;
 
 export const NavBar = () => {
+
+  const connectWallet = async () => {
+    try {
+      const { ethereum } = window;
+      console.log('이더리움 오브젝트', ethereum);
+      const accounts = await ethereum.request({
+        method: 'eth_requestAccounts',
+      });
+      const account = accounts[0];
+      console.log('현재 계정:', account);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  // useEffect(() => {
+  //   connectWallet();
+  // }, []);
+
   return (
     <Header>
       <Nav>
@@ -35,11 +55,11 @@ export const NavBar = () => {
           <Link href="/mintNFT">
             <a>NFT발행</a>
           </Link>
-          <Link href="/wallet">
+          <div onClick={connectWallet}>
             <a>
               <FontAwesomeIcon icon={faWallet} />
             </a>
-          </Link>
+          </div>
         </div>
       </Nav>
     </Header>
