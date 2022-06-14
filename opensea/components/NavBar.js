@@ -11,11 +11,12 @@ const Header = styled.header`
   width: 100%;
   height: 80px;
   background-color: #bfbfbf;
+  position: fixed;
 `;
 
 const Title = styled.a`
   cursor: pointer;
-  font-size: 45px;
+  font-size: 3em;
   color: #1175e7;
   font-family: "Palatino Linotype";
   font-weight: 600;
@@ -37,7 +38,7 @@ const Menu = styled.div`
 const Btn = styled.a`
   border-radius: ${(props) => (props.primary ? "20px" : "")};
   width: ${(props) => (props.primary ? "6em" : "2em")};
-  font-size: ${(props) => (props.primary ? "20px" : "25px")};
+  font-size: ${(props) => (props.primary ? "1.5em" : "2em")};
   opacity: ${(props) => (props.primary ? "0.9" : "0.8")};
   color: #292220;
   font-weight: 500;
