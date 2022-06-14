@@ -10,7 +10,7 @@ const Header = styled.header`
   z-index: 1000;
   width: 100%;
   height: 80px;
-  background-color: #bfbfbf;
+  background-color: #dddd;
   position: fixed;
 `;
 
@@ -38,19 +38,19 @@ const Menu = styled.div`
 const Btn = styled.a`
   border-radius: ${(props) => (props.primary ? "20px" : "")};
   width: ${(props) => (props.primary ? "6em" : "2em")};
-  font-size: ${(props) => (props.primary ? "1.5em" : "2em")};
   opacity: ${(props) => (props.primary ? "0.9" : "0.8")};
-  color: #292220;
+  color: #1f2023;
+  font-size: 1.5em;
   font-weight: 500;
   display: flex;
   justify-content: center;
   flex-direction: column;
   text-align: center;
   margin-left: 20px;
-  transition: 0.5s;
+  transition: 0.2s;
   :hover {
     opacity: 1;
-    font-weight: ${(props) => (props.primary ? "800" : "")};
+    font-weight: 650;
   }
   cursor: pointer;
   height: 2em;
