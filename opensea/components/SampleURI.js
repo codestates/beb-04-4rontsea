@@ -1,2 +1,2 @@
-const URI = "https://i.imgur.com/Y8b2VUI.jpeg";
+const URI = "data:application/json;base64,eyJuYW1lIjogIkNob2NvbGF0ZSIsICJkZXNjcmlwdGlvbiI6ICJUaGlzIGlzIGdvb2Qgc3VnYXIuIEtpbGxzIHlvdSBmYXN0ZXIuIiwgImltYWdlIjogImh0dHBzOi8vaS5pbWd1ci5jb20vWThiMlZVSS5qcGVnIn0=";
 export { URI };

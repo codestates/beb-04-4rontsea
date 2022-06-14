@@ -187,7 +187,7 @@ const erc721Abi = [
 			},
 			{
 				"internalType": "string",
-				"name": "tokenURI1",
+				"name": "imageURI",
 				"type": "string"
 			}
 		],
