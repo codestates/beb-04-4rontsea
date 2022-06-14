@@ -13,13 +13,46 @@ const Header = styled.header`
   background-color: #bfbfbf;
 `;
 
+const Title = styled.a`
+  cursor: pointer;
+  font-size: 45px;
+  color: #1175e7;
+  font-family: "Palatino Linotype";
+  font-weight: 600;
+`;
+
 const Nav = styled.div`
   display: flex;
   align-items: center;
-  max-width: 1400px;
-  min-width: 1280px;
   padding: 0 20px;
   height: 100%;
+`;
+
+const Menu = styled.div`
+  display: flex;
+  margin-left: auto;
+  align-items: center;
+`;
+
+const Btn = styled.a`
+  border-radius: ${(props) => (props.primary ? "20px" : "")};
+  width: ${(props) => (props.primary ? "6em" : "2em")};
+  font-size: ${(props) => (props.primary ? "20px" : "25px")};
+  opacity: ${(props) => (props.primary ? "0.9" : "0.8")};
+  color: #292220;
+  font-weight: 500;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  text-align: center;
+  margin-left: 20px;
+  transition: 0.5s;
+  :hover {
+    opacity: 1;
+    font-weight: ${(props) => (props.primary ? "800" : "")};
+  }
+  cursor: pointer;
+  height: 2em;
 `;
 
 export const NavBar = () => {
@@ -28,19 +61,19 @@ export const NavBar = () => {
       <Nav>
         <div>
           <Link href="/">
-            <a>4rontsea</a>
+            <Title>4rontsea</Title>
           </Link>
         </div>
-        <div>
+        <Menu>
           <Link href="/mintNFT">
-            <a>NFT발행</a>
+            <Btn primary>Mint NFT</Btn>
           </Link>
           <Link href="/wallet">
-            <a>
+            <Btn>
               <FontAwesomeIcon icon={faWallet} />
-            </a>
+            </Btn>
           </Link>
-        </div>
+        </Menu>
       </Nav>
     </Header>
   );
