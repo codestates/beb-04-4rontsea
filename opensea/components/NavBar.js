@@ -4,7 +4,12 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faWallet } from "@fortawesome/free-solid-svg-icons";
 // NextJS styled-components https://record22.tistory.com/128
 import styled from "styled-components";
-import { useEffect } from "react";
+import { useState } from "react";
+
+import { CONTRACT } from './Contract';
+import erc721Abi from '../component2/erc721Abi';
+import { URI } from './SampleURI';
+import { ethers } from 'ethers';
 
 const Header = styled.header`
   top: 0;
@@ -57,6 +62,8 @@ const Btn = styled.a`
 `;
 
 export const NavBar = () => {
+  const [currentUser, setCurrentUser] = useState("0x6E6d266943Fa4Dd3676335510d07C190D8F65702");
+
   const connectWallet = async () => {
     try {
       const { ethereum } = window;
@@ -65,11 +72,27 @@ export const NavBar = () => {
         method: "eth_requestAccounts",
       });
       const account = accounts[0];
-      console.log("현재 계정:", account);
+      setCurrentUser(account);
+      console.log('현재 계정:', account);
     } catch (error) {
       console.log(error);
     }
   };
+
+  const mintNFT = async () => {
+    const provider = new ethers.providers.Web3Provider(window.ethereum);
+    const signer = provider.getSigner();
+    const contract = new ethers.Contract(CONTRACT, erc721Abi, signer);
+    try {
+      console.log(currentUser, URI);
+      const txn = await contract.mintNFT(currentUser, URI);
+      //const txn = await contract.tokenURI(1);
+      console.log(txn);
+    }
+    catch (error) {
+      console.log(error);
+    }
+  }
 
   // useEffect(() => {
   //   connectWallet();
@@ -92,6 +115,7 @@ export const NavBar = () => {
               <FontAwesomeIcon icon={faWallet} />
             </Btn>
           </div>
+          <div onClick={mintNFT}>민트 실행</div>
         </Menu>
       </Nav>
     </Header>
