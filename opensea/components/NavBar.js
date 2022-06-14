@@ -16,28 +16,60 @@ const Header = styled.header`
   z-index: 1000;
   width: 100%;
   height: 80px;
-  background-color: #bfbfbf;
+  background-color: #1f2023;
+  position: fixed;
+`;
+
+const Title = styled.a`
+  cursor: pointer;
+  font-size: 3em;
+  color: #08b7ff;
+  font-family: "Palatino Linotype";
+  font-weight: 600;
 `;
 
 const Nav = styled.div`
   display: flex;
   align-items: center;
-  max-width: 1400px;
-  min-width: 1280px;
   padding: 0 20px;
   height: 100%;
 `;
 
-export const NavBar = () => {
+const Menu = styled.div`
+  display: flex;
+  margin-left: auto;
+  align-items: center;
+`;
 
+const Btn = styled.a`
+  border-radius: ${(props) => (props.primary ? "20px" : "")};
+  width: ${(props) => (props.primary ? "6em" : "2em")};
+  opacity: ${(props) => (props.primary ? "0.9" : "0.8")};
+  color: #dddd;
+  font-size: 1.5em;
+  font-weight: 500;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  text-align: center;
+  margin-left: 20px;
+  transition: 0.2s;
+  :hover {
+    opacity: 1;
+  }
+  cursor: pointer;
+  height: 2em;
+`;
+
+export const NavBar = () => {
   const [currentUser, setCurrentUser] = useState("0x6E6d266943Fa4Dd3676335510d07C190D8F65702");
 
   const connectWallet = async () => {
     try {
       const { ethereum } = window;
-      console.log('이더리움 오브젝트', ethereum);
+      console.log("이더리움 오브젝트", ethereum);
       const accounts = await ethereum.request({
-        method: 'eth_requestAccounts',
+        method: "eth_requestAccounts",
       });
       const account = accounts[0];
       setCurrentUser(account);
@@ -45,7 +77,7 @@ export const NavBar = () => {
     } catch (error) {
       console.log(error);
     }
-  }
+  };
 
   const mintNFT = async () => {
     const provider = new ethers.providers.Web3Provider(window.ethereum);
@@ -71,20 +103,20 @@ export const NavBar = () => {
       <Nav>
         <div>
           <Link href="/">
-            <a>4rontsea</a>
+            <Title>4rontsea</Title>
           </Link>
         </div>
-        <div>
+        <Menu>
           <Link href="/mintNFT">
-            <a>NFT발행</a>
+            <Btn primary>Create</Btn>
           </Link>
           <div onClick={connectWallet}>
-            <a>
+            <Btn>
               <FontAwesomeIcon icon={faWallet} />
-            </a>
+            </Btn>
           </div>
           <div onClick={mintNFT}>민트 실행</div>
-        </div>
+        </Menu>
       </Nav>
     </Header>
   );
