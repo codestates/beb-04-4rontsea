@@ -1,0 +1,3 @@
+const CONTRACT = '0x92ffc9c5f6620f718fc90de4c59075cb93516d22';
+
+export { CONTRACT };
