@@ -39,4 +39,6 @@ export const Thumnail = () => {
       </Carousel>
     </div>
   );
+
 };
+
