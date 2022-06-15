@@ -1,29 +1,37 @@
 import { NavBar } from "../components/NavBar";
 
+import { Moralis } from 'moralis';
 
-function upload() {
-  const reader = new FileReader();
-  reader.onloadend = function() {
-    const ipfs = window.IpfsApi('localhost', 5001) // Connect to IPFS
-    const buf = buffer.Buffer(reader.result) // Convert data into buffer
-    ipfs.files.add(buf, (err, result) => { // Upload buffer to IPFS
-      if(err) {
-        console.error(err)
-        return
-      }
-      let url = `https://ipfs.io/ipfs/${result[0].hash}`
-      console.log(`Url --> ${url}`)
-      document.getElementById("url").innerHTML= url
-      document.getElementById("url").href= url
-      document.getElementById("output").src = url
-    })
-  }
-  const photo = document.getElementById("photo");
-  reader.readAsArrayBuffer(photo.files[0]); // Read Provided File
+uploadImage = async() =>{
+  const data = fileInput.files[0]
+  const file = new Moralis.File(data.name, data)
+  await file.saveIPFS();
+  console.log(file.ipfs(), file.hash())
+
+  return file.ipfs();
 }
 
+uploadMetadata = async(imageURL) =>{
+  const name = document.getElementById('metadataName').value;
+  const description = document.getElementById('metadataDesc').value;
+  
+  const metadata = {
+    "name": name,
+    "description": description,
+    "image" : imageURL
+  }
+  const file = new Moralis.File("file.json", {base64 : btoa(JSON.stringify(metadata))});
+  await file.saveIPFS();
+   
+}
+gogogo = async () =>{
+  const image = await uploadImage();
+  await uploadMetadata(image)
+  console.log(uploadImage);
+}
 
 export default function MintNFT() {
+ 
   return (
     <div>
       <NavBar />
@@ -32,17 +40,17 @@ export default function MintNFT() {
         <form>
           <fieldset>
             <legend>파일업로드</legend>
-            <button onClick={upload()} id="photo" type="file" accept="image/*" require></button>
+            <input type="file" name="fileInput" id="fileInput"></input>
           </fieldset>
           <div>
             <label>설명</label>
-            <textarea required></textarea>
+            <textarea type="text" name="metadataDesc" id ="metadataDesc" placeholder="please descript NFT" cols="30" row="10"></textarea>
           </div>
           <div>
             <label>이름</label>
-            <input type="text" required></input>
+            <input type="text" name="metadataName" id ="metadataName" required></input>
           </div>
-          <button>발행</button>
+          <button onClick={gogogo}>발행</button>
         </form>
       </div>
     </div>
