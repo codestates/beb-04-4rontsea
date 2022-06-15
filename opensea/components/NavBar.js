@@ -82,23 +82,20 @@ export const NavBar = () => {
     }
   };
 
-  const mintNFT = async () => {
-    const provider = new ethers.providers.Web3Provider(window.ethereum);
-    const signer = provider.getSigner();
-    const contract = new ethers.Contract(CONTRACT, erc721Abi, signer);
-    try {
-      console.log(currentUser, URI);
-      const txn = await contract.mintNFT(currentUser, URI);
-      //const txn = await contract.tokenURI(1);
-      console.log(txn);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  // useEffect(() => {
-  //   connectWallet();
-  // }, []);
+  // const mintNFT = async () => {
+  //   const provider = new ethers.providers.Web3Provider(window.ethereum);
+  //   const signer = provider.getSigner();
+  //   const contract = new ethers.Contract(CONTRACT, erc721Abi, signer);
+  //   try {
+  //     console.log(currentUser, URI);
+  //     const txn = await contract.mintNFT(currentUser, URI);
+  //     //const txn = await contract.tokenURI(1);
+  //     console.log(txn);
+  //   }
+  //   catch (error) {
+  //     console.log(error);
+  //   }
+  // }
 
   return (
     <Header>
@@ -117,7 +114,7 @@ export const NavBar = () => {
               <FontAwesomeIcon icon={faWallet} />
             </Btn>
           </div>
-          <div onClick={mintNFT}>민트 실행</div>
+          {/* <div onClick={mintNFT}>민트 실행</div> */}
         </Menu>
       </Nav>
     </Header>
