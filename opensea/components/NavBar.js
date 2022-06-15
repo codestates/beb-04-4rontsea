@@ -6,10 +6,10 @@ import { faWallet } from "@fortawesome/free-solid-svg-icons";
 import styled from "styled-components";
 import { useState } from "react";
 
-import { CONTRACT } from './Contract';
-import erc721Abi from '../component2/erc721Abi';
-import { URI } from './SampleURI';
-import { ethers } from 'ethers';
+import { CONTRACT } from "./Contract";
+import erc721Abi from "../component2/erc721Abi";
+import { URI } from "./SampleURI";
+import { ethers } from "ethers";
 
 const Header = styled.header`
   top: 0;
@@ -55,6 +55,7 @@ const Btn = styled.a`
   margin-left: 20px;
   transition: 0.2s;
   :hover {
+    font-weight: 700;
     opacity: 1;
   }
   cursor: pointer;
@@ -62,8 +63,9 @@ const Btn = styled.a`
 `;
 
 export const NavBar = () => {
-  
-  const [currentUser, setCurrentUser] = useState("0x6E6d266943Fa4Dd3676335510d07C190D8F65702");
+  const [currentUser, setCurrentUser] = useState(
+    "0x6E6d266943Fa4Dd3676335510d07C190D8F65702"
+  );
 
   const connectWallet = async () => {
     try {
@@ -74,7 +76,7 @@ export const NavBar = () => {
       });
       const account = accounts[0];
       setCurrentUser(account);
-      console.log('현재 계정:', account);
+      console.log("현재 계정:", account);
     } catch (error) {
       console.log(error);
     }

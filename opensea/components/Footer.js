@@ -7,6 +7,7 @@ const Foot = styled.div`
   padding: 30px;
   display: flex;
   justify-content: space-between;
+  align-items: center;
 `;
 
 const Title = styled.a`

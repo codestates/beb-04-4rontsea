@@ -17,6 +17,8 @@
   },
   "homepage": "https://github.com/minwoogramer/beb-04-4runtsea#readme",
   "dependencies": {
+    "@ethersproject/wordlists": "^5.6.1",
+    "ethers": "^5.6.8",
     "react-responsive-carousel": "^3.2.23"
   }
 }
