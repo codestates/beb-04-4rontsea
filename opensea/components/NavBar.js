@@ -85,7 +85,8 @@ export const NavBar = () => {
     const contract = new ethers.Contract(CONTRACT, erc721Abi, signer);
     try {
       console.log(currentUser, URI);
-      const txn = await contract.mintNFT(currentUser, URI);
+      const txn = await contract.mintNFT(currentUser, URL );//ipfs이용해서 받은 이미지URL을 때려박으면됌
+      //버튼을 눌렀을때 이미지URL로 변화하는 작업이랑 메타데이터같이 ㅇ로라
       //const txn = await contract.tokenURI(1);
       console.log(txn);
     }
