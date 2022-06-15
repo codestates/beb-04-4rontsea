@@ -9,8 +9,8 @@ config.autoAddCss = false;
 function MyApp({ Component, pageProps }) {
   return (
     <MoralisProvider
-      appId={process.env.NEXT_PUBLIC_APP_ID}
-      serverUrl={process.env.NEXT_PUBLIC_SERVER_URL}
+      appId="4xXCbtP7m1VwKTHPiuKep75TfYC5TDnd027EZKNQ"
+      serverUrl="https://elifuy0f0etv.usemoralis.com:2053/server"
     >
       <Component {...pageProps} />
     </MoralisProvider>
