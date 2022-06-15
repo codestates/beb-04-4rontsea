@@ -5,6 +5,8 @@ import { faWallet } from "@fortawesome/free-solid-svg-icons";
 // NextJS styled-components https://record22.tistory.com/128
 import styled from "styled-components";
 import { useMoralis } from "react-moralis";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { useState, useEffect } from "react";
 import { CONTRACT } from './Contract';
 import erc721Abi from '../component2/erc721Abi';
@@ -102,6 +104,7 @@ export const NavBar = () => {
   }
   const logOut = async () => {
     await logout();
+    window.alert("로그아웃되었습니다");
     console.log("logged out");
   }
 
@@ -122,7 +125,7 @@ export const NavBar = () => {
               <FontAwesomeIcon icon={faWallet} />
             </Btn>
           </div>
-          <div onClick={logOut}>Logout</div>
+          <div><button onClick={logOut}>로그아웃</button></div>
         </Menu>
       </Nav>
     </Header>
