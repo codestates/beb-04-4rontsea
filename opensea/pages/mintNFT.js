@@ -1,10 +1,37 @@
 import { NavBar } from "../components/NavBar";
-import { NFTStorage, File } from 'nft.storage'
+
 import { useState } from "react";
+import styled from "styled-components";
+
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faWallet } from "@fortawesome/free-solid-svg-icons";
 
 import { CONTRACT } from '../components/Contract';
 import erc721Abi from '../component2/erc721Abi';
 import { ethers } from 'ethers';
+
+import { NFTStorage, File } from 'nft.storage'
+
+const Btn = styled.a`
+  border-radius: ${(props) => (props.primary ? "20px" : "")};
+  width: ${(props) => (props.primary ? "6em" : "2em")};
+  opacity: ${(props) => (props.primary ? "0.9" : "0.8")};
+  color: #dddd;
+  font-size: 1.5em;
+  font-weight: 500;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  text-align: center;
+  margin-left: 20px;
+  transition: 0.2s;
+  :hover {
+    font-weight: 700;
+    opacity: 1;
+  }
+  cursor: pointer;
+  height: 2em;
+`;
 
 export default function MintNFT() {
 
@@ -17,7 +44,22 @@ export default function MintNFT() {
   const [name, setName] = useState("4rontsea")
   const [desc, setDesc] = useState("This is a 4frontsea NFT")
 
-  const [currentUser, setCurrentUser] = useState("0x6E6d266943Fa4Dd3676335510d07C190D8F65702");
+  const [currentUser, setCurrentUser] = useState("");
+
+  const connectWallet = async () => {
+    try {
+      const { ethereum } = window;
+      console.log("이더리움 오브젝트", ethereum);
+      const accounts = await ethereum.request({
+        method: "eth_requestAccounts",
+      });
+      const account = accounts[0];
+      setCurrentUser(account);
+      console.log("현재 계정:", account);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const uploadImage = async (f) => {
     console.log("image uploaded!", f.target.files[0])
@@ -71,26 +113,41 @@ export default function MintNFT() {
       <NavBar />
       <div>
         <h1>NFT 발행</h1>
-        <form>
-          <div>
-            <label>파일업로드</label>
-            <input onChange={uploadImage} type="file" accept="image/*" required></input>
-            {
-              isImageUploaded ?
-              loading ? "Loading image to IPFS..." : "Upload complete!"
-                : null
-            }
+        {
+          !currentUser ? (
+          <div onClick={connectWallet}>
+              <Btn>
+                <FontAwesomeIcon icon={faWallet} />
+              </Btn>
           </div>
-          <div>
-            <label>이름</label>
-            <input onChange={(e) => setName(e.target.value)} type="text" value={name} required />
-          </div>
-          <div>
-            <label>설명</label>
-            <textarea onChange={(e) => setDesc(e.target.value)} value={desc} required />
-          </div>
-          { !loading && currentUser ? <button onClick={mint}>발행</button> : "Connect Wallet & Upload Image please" }
-        </form>
+          )
+          :
+          (
+          <>
+            <div>{`Your Address: ${currentUser}`}</div>
+            <form>
+              <div>
+                <label>파일업로드</label>
+                <input onChange={uploadImage} type="file" accept="image/*" required></input>
+                {
+                  isImageUploaded ?
+                  loading ? "Loading image to IPFS..." : "Upload complete!"
+                    : null
+                }
+              </div>
+              <div>
+                <label>이름</label>
+                <input onChange={(e) => setName(e.target.value)} type="text" value={name} required />
+              </div>
+              <div>
+                <label>설명</label>
+                <textarea onChange={(e) => setDesc(e.target.value)} value={desc} required />
+              </div>
+              { metadata === null ? "Upload Image please" : <button onClick={mint}>발행</button> }
+            </form>
+          </>
+          )
+        }
       </div>
     </div>
   );
