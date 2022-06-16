@@ -1,6 +1,6 @@
 /**
  * npm i react-responsive-carousel
- * "react-responsive-carousel": "^3.2.20",
+ * "react-responsive-carousel",
  */
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { Carousel } from "react-responsive-carousel"; 
