@@ -8,7 +8,7 @@ export default function Home() {
   return (
     <>
       <NavBar />
-      <Thumnail />
+      <Thumbnail />
       <Lists />
       <Footer />
     </>
