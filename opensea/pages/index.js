@@ -9,8 +9,8 @@ export default function Home() {
   
   return (
     <>
-    
-      <NavBar> </NavBar>
+
+      <NavBar />
       <Thumbnail />
       <Lists />
       <Footer />
