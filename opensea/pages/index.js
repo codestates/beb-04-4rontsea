@@ -1,14 +1,13 @@
 import { NavBar } from "../components/NavBar";
-import { Thumbnail } from "../components/Thumbnail";
 import { Footer } from "../components/Footer";
-import Link from "next/link";
 import { Lists } from "../components/Lists";
+import { Thumbnail } from "../components/Thumbnail";
 
 export default function Home() {
   return (
     <>
       <NavBar />
-      <Thumnail />
+      <Thumbnail />
       <Lists />
       <Footer />
     </>
