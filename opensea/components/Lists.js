@@ -2,7 +2,10 @@ import styled from "styled-components";
 import Link from "next/link";
 // 더미파일 하나 추가했습니다.
 import dummyData from "./dummy/dummy";
-
+import {fetchSearchNFTs} from "./SearchCollection"
+import { useState } from 'react';
+import { useEffect } from 'react';
+import {useMoralisWeb3Api} from "react-moralis"
 const Lists_Container = styled.div`
   display: flex;
   flex-direction: column;
@@ -45,6 +48,28 @@ const NFT_Container = styled.div`
 `;
 
 export const Lists = () => {
+  const [nftlist, setNftlist] = useState([]);
+  const [isloading, setIsloading] = useState(false);
+  const Web3Api = useMoralisWeb3Api();
+    useEffect(()=>{
+    if(Web3Api=== undefined) return
+    setIsloading(true)
+    fetchSearchNFTs(Web3Api)
+    .then((nfts)=>{
+    
+      console.log(nfts,"1234")
+      
+      nfts = nfts.map((el)=>{
+      console.log(el.metadata)
+        return {
+        metadata:JSON.parse(el.metadata),
+        token_id:el.token_id
+     }})
+      
+    
+      setNftlist(()=>[...nfts] )
+      setIsloading(false)}).catch((error)=>console.log(error))
+  },[])
   return (
     <Lists_Container>
       <Intro_Container>
@@ -71,18 +96,19 @@ export const Lists = () => {
           </p>
         </Drops>
         <NFT_Container>
-          {dummyData.map((el) => {
+          
+           {isloading ? undefined :  nftlist.map(({metadata, token_id}, index) => {
             return (
-              <NFT_Frame>
-                <Link href={`/detail/${el.id}`}>
+              <NFT_Frame key={index}>
+                <Link href={`/detail/${token_id}`}>
                   <a>
                     <img
-                      src={el.picture}
+                      src={metadata.image.replace("ipfs://ipfs/","https://ipfs.moralis.io:2053/ipfs/").replace("ipfs://","https://ipfs.moralis.io:2053/ipfs/")}
                       style={{ maxHeight: "300px", maxWidth: "300px" }}
                     ></img>
                   </a>
                 </Link>
-                <span>{el.name}</span>
+                <span>{metadata.name}</span>
               </NFT_Frame>
             );
           })}
