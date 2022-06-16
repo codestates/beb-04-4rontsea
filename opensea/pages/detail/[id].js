@@ -1,8 +1,10 @@
-import { NavBar } from "../components/NavBar";
-import { Footer } from "../components/Footer";
+import { NavBar } from "../../components/NavBar";
+import { Footer } from "../../components/Footer";
 import styled from "styled-components";
+import { useRouter } from "next/router";
+import dummyData from "../../components/dummy/dummy";
 // 반응형은 내일... 🔥
-
+// TokenID 클릭 시 이더스캔 해당 ID로 이동
 const Main = styled.main`
   min-height: calc(100vh - 315px);
   padding-bottom: 120px;
@@ -58,11 +60,17 @@ const Text_Layout_title = styled.div`
 `;
 
 const Creater = styled.span`
+  // 메인컬러
   color: #08b7ff;
   border: 1px solid #08b7ff;
   border-radius: 20px;
   margin-left: 10px;
   padding: 0.5em;
+  transition: 0.5s;
+  :hover {
+    color: #00f4e9;
+    border: 1px solid #00f4e9;
+  }
 `;
 
 const DescriptionLayout_span = styled.span`
@@ -75,21 +83,25 @@ const P = styled.p`
 `;
 
 export default function Home() {
+  const router = useRouter();
+  const id = router.query.id;
+  console.log(id);
+
   return (
     <div>
       <NavBar />
       <Main>
         <Section>
           <Frame>
-            <Image src="https://lh3.googleusercontent.com/PhIVfGFb5ps9Tml1Bu8GCgp_wi1FF-vPCa0jRWfmQ62QyPgUS4HIBRne8CQeG8HrMVegUicOgLywS-cBL7JnGBmVuZfqnT7GtTQdGA=w600"></Image>
-            <Image_Name>Primate #6161</Image_Name>
+            <Image src={dummyData[id].picture}></Image>
+            <Image_Name>{dummyData[id].name}</Image_Name>
           </Frame>
         </Section>
         <Text_Layout>
           <Text_Layout_Section>
             <Text_Layout_title>
               <DescriptionLayout_span>Description</DescriptionLayout_span>
-              <Creater>By CvZY2t</Creater>
+              <Creater>By {dummyData[id].creater}</Creater>
             </Text_Layout_title>
             <P>
               Collection of 10,000 Primates facilitating a seamless adoption of
@@ -100,8 +112,11 @@ export default function Home() {
           <Text_Layout_Section>
             <Text_Layout_title>
               <DescriptionLayout_span>Details</DescriptionLayout_span>
-              <Creater>Owned by Crypto1654</Creater>
-              <a href="https://explorer.solana.com/address/87pavTNE2tPyDX1uuKfkDQvVgPYJu5hveqs44sHYdRdb">
+              <Creater>Owned by {dummyData[id].owner}</Creater>
+              <a
+                href={`https://etherscan.io/address/${dummyData[id].tokenID}`}
+                target="_blank"
+              >
                 <Creater>Token ID</Creater>
               </a>
             </Text_Layout_title>
