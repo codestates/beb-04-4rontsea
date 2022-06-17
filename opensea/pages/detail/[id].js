@@ -86,102 +86,62 @@ const P = styled.p`
 `;
 
 export default function Home() {
-  const [IsFatching, setIsFatching] = useState(false);
+  const [nftlist, setNftlist] = useState([]);
   const router = useRouter();
   const id = router.query.id;
-  // console.log(`toke_id = ${id}`);
-  const [data, setData] = useState([])
-  const [isloading, setIsloading] = useState(true);
-  const [imgSrc, setImgSrc] = useState([]);
-  const [name, setName] = useState([]);
-  const [desc, setDsec] = useState([]);
-  const [creater, setCreater] = useState([]);
-  const [tokenId, setTokenId] = useState([]);
-  const [updateAt, setUpdateAt] = useState([]);
+  console.log(`toke_id = ${id}`);
+  
+  const [isloading, setIsloading] = useState(false);
   const Web3Api = useMoralisWeb3Api();
-  // console.log(id);
-  
-
-  if(Web3Api=== undefined) return
-  
-  const asyncFc =async ()=>{
-    try{
-      setIsloading(true)
-      
-     const data = await fetchSearchNFTs(Web3Api)
-     
-     const filterData = data.filter(nft=>nft.token_id === id);
-     console.log(filterData);
-     const mapData = filterData.map(el=>{
-
-      const metadata = JSON.parse(el.metadata)
-      console.log(metadata)
-      const {image} =metadata
-          const result =  {
-          image,
-          tokenId:el.token_id,
-           name:el.metadata_name,
-           desc:el.metadata_description,
-           createrAddress:el.minter_address,
-           updatedAt:el.updatedAt
-       }
-       return result;
-     })
-     setData(mapData)
-     return mapData
-
-    }catch(err){
-      
-      console.error(err)
-    }
-  }
-  
+  console.log(Web3Api,"web3api");
     useEffect(()=>{
+    if(Web3Api=== undefined) return
+    setIsloading(true)
+    fetchSearchNFTs(Web3Api)
+    .then((nfts)=>{
+    console.log(`nft = ${nfts}`);
+    const Filtered =  nfts.filter(nft => nft.token_id === id)
+      console.log( `filter = ${Filtered} ,`)
       
-    asyncFc().then(data =>{
-      setData(data)
-    // isFetching
-    setIsloading(false)
-   });
-    
-    },[])
-    useEffect(()=>{
-      console.log(123)
-      console.log(data)
-      if(data) {
-        const{name,image,desc,createrAddress,updateAt, tokenId} = data[0];
-        console.log(name)
-        // const image = metadata.image?.replace("ipfs://ipfs/","https://ipfs.moralis.io:2053/ipfs/").replace("ipfs://","https://ipfs.moralis.io:2053/ipfs/")
-        setName(name);
-        setImgSrc(image);
-        setDsec(desc);
-        setCreater(createrAddress);
-        setUpdateAt(updateAt);
-        setTokenId(tokenId);
-  }
-    },[data])
-    
-  // const{name,metadata,desc,createrAddress,updateAt, tokenId} = nftlist[0];
-  // const image = metadata.image.replace("ipfs://ipfs/","https://ipfs.moralis.io:2053/ipfs/").replace("ipfs://","https://ipfs.moralis.io:2053/ipfs/")
-  // console.log(name,image,desc,creater,updateAt,tokenId)
+    const  nftlist = Filtered.map((el)=>{
+      
+        return {
+        metadata:JSON.parse(el.metadata),
+        token_id:el.token_id,
+         metadata_name:el.metadata_name,
+         metadata_description:el.metadata_description,
+         minter_address:el.minter_address,
+         updatedAt:el.updatedAt
+     }})
+      
+    console.log(`nftlist = ${nftlist}`)
+      setNftlist([...nftlist])
+      setIsloading(false)})
+      .catch((error)=>console.log(error))
+  },[])
+  console.log(nftlist,"nftlist")
+   const imgSrc =nftlist[0]?.metadata.image.replace("ipfs://ipfs/","https://ipfs.moralis.io:2053/ipfs/").replace("ipfs://","https://ipfs.moralis.io:2053/ipfs/")
+const Name = nftlist[0]?.metadata_name
+const Desc = nftlist[0]?.metadata_description
+const creterAdress = nftlist[0]?.minter_address
+const TokenId = nftlist[0]?.token_id
+const UpdataAt = nftlist[0]?.updatedAt
 
-  return (    
+  return (
     <div>
-      {!isloading &&
-      <>
       <NavBar />
       <Main>
         <Section>
           <Frame>
             <Image src={imgSrc}></Image>
-            <Image_Name>{name}</Image_Name>
+            <Image_Name>{Name}</Image_Name>
           </Frame>
         </Section>
         <Text_Layout>
           <Text_Layout_Section>
             <Text_Layout_title>
-              <DescriptionLayout_span>{desc}</DescriptionLayout_span>
-              <Creater>By {creater}</Creater>
+              <DescriptionLayout_span>{Desc}</DescriptionLayout_span>
+              <Creater>By {creterAdress}</Creater>
             </Text_Layout_title>
             <P>
               Collection of 10,000 Primates facilitating a seamless adoption of
@@ -192,22 +152,19 @@ export default function Home() {
           <Text_Layout_Section>
             <Text_Layout_title>
               <DescriptionLayout_span>Details</DescriptionLayout_span>
-              <Creater>Owned by {creater}</Creater>
+              <Creater>Owned by {creterAdress}</Creater>
               <a
-                href={`https://etherscan.io/address/${tokenId}`}
+                href={`https://etherscan.io/address/${TokenId}`}
                 target="_blank"
               >
-                <Creater>{ tokenId}</Creater>
+                <Creater>{ TokenId}</Creater>
               </a>
             </Text_Layout_title>
-            <P>Sale ends {updateAt}</P>
+            <P>Sale ends {UpdataAt}</P>
           </Text_Layout_Section>
         </Text_Layout>
       </Main>
       <Footer />
-      </>
-    }
     </div>
-    
   );
 }
