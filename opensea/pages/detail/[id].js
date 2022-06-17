@@ -2,7 +2,10 @@ import { NavBar } from "../../components/NavBar";
 import { Footer } from "../../components/Footer";
 import styled from "styled-components";
 import { useRouter } from "next/router";
-import dummyData from "../../components/dummy/dummy";
+import {useMoralisWeb3Api} from "react-moralis"
+import {fetchSearchNFTs} from "../../components/SearchCollection" 
+import { useState } from 'react';
+import { useEffect } from 'react';
 // 반응형은 내일... 🔥
 // TokenID 클릭 시 이더스캔 해당 ID로 이동
 const Main = styled.main`
@@ -83,25 +86,102 @@ const P = styled.p`
 `;
 
 export default function Home() {
+  const [IsFatching, setIsFatching] = useState(false);
   const router = useRouter();
   const id = router.query.id;
-  console.log(id);
+  // console.log(`toke_id = ${id}`);
+  const [data, setData] = useState([])
+  const [isloading, setIsloading] = useState(true);
+  const [imgSrc, setImgSrc] = useState([]);
+  const [name, setName] = useState([]);
+  const [desc, setDsec] = useState([]);
+  const [creater, setCreater] = useState([]);
+  const [tokenId, setTokenId] = useState([]);
+  const [updateAt, setUpdateAt] = useState([]);
+  const Web3Api = useMoralisWeb3Api();
+  // console.log(id);
+  
 
-  return (
+  if(Web3Api=== undefined) return
+  
+  const asyncFc =async ()=>{
+    try{
+      setIsloading(true)
+      
+     const data = await fetchSearchNFTs(Web3Api)
+     
+     const filterData = data.filter(nft=>nft.token_id === id);
+     console.log(filterData);
+     const mapData = filterData.map(el=>{
+
+      const metadata = JSON.parse(el.metadata)
+      console.log(metadata)
+      const {image} =metadata
+          const result =  {
+          image,
+          tokenId:el.token_id,
+           name:el.metadata_name,
+           desc:el.metadata_description,
+           createrAddress:el.minter_address,
+           updatedAt:el.updatedAt
+       }
+       return result;
+     })
+     setData(mapData)
+     return mapData
+
+    }catch(err){
+      
+      console.error(err)
+    }
+  }
+  
+    useEffect(()=>{
+      
+    asyncFc().then(data =>{
+      setData(data)
+    // isFetching
+    setIsloading(false)
+   });
+    
+    },[])
+    useEffect(()=>{
+      console.log(123)
+      console.log(data)
+      if(data) {
+        const{name,image,desc,createrAddress,updateAt, tokenId} = data[0];
+        console.log(name)
+        // const image = metadata.image?.replace("ipfs://ipfs/","https://ipfs.moralis.io:2053/ipfs/").replace("ipfs://","https://ipfs.moralis.io:2053/ipfs/")
+        setName(name);
+        setImgSrc(image);
+        setDsec(desc);
+        setCreater(createrAddress);
+        setUpdateAt(updateAt);
+        setTokenId(tokenId);
+  }
+    },[data])
+    
+  // const{name,metadata,desc,createrAddress,updateAt, tokenId} = nftlist[0];
+  // const image = metadata.image.replace("ipfs://ipfs/","https://ipfs.moralis.io:2053/ipfs/").replace("ipfs://","https://ipfs.moralis.io:2053/ipfs/")
+  // console.log(name,image,desc,creater,updateAt,tokenId)
+
+  return (    
     <div>
+      {!isloading &&
+      <>
       <NavBar />
       <Main>
         <Section>
           <Frame>
-            <Image src={dummyData[id].picture}></Image>
-            <Image_Name>{dummyData[id].name}</Image_Name>
+            <Image src={imgSrc}></Image>
+            <Image_Name>{name}</Image_Name>
           </Frame>
         </Section>
         <Text_Layout>
           <Text_Layout_Section>
             <Text_Layout_title>
-              <DescriptionLayout_span>Description</DescriptionLayout_span>
-              <Creater>By {dummyData[id].creater}</Creater>
+              <DescriptionLayout_span>{desc}</DescriptionLayout_span>
+              <Creater>By {creater}</Creater>
             </Text_Layout_title>
             <P>
               Collection of 10,000 Primates facilitating a seamless adoption of
@@ -112,19 +192,22 @@ export default function Home() {
           <Text_Layout_Section>
             <Text_Layout_title>
               <DescriptionLayout_span>Details</DescriptionLayout_span>
-              <Creater>Owned by {dummyData[id].owner}</Creater>
+              <Creater>Owned by {creater}</Creater>
               <a
-                href={`https://etherscan.io/address/${dummyData[id].tokenID}`}
+                href={`https://etherscan.io/address/${tokenId}`}
                 target="_blank"
               >
-                <Creater>Token ID</Creater>
+                <Creater>{ tokenId}</Creater>
               </a>
             </Text_Layout_title>
-            <P>Sale ends July 15, 2022 at 4:02pm GMT+9</P>
+            <P>Sale ends {updateAt}</P>
           </Text_Layout_Section>
         </Text_Layout>
       </Main>
       <Footer />
+      </>
+    }
     </div>
+    
   );
 }
