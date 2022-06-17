@@ -60,7 +60,7 @@ export const Lists = () => {
       console.log(nfts,"1234")
       
       nfts = nfts.map((el)=>{
-      console.log(el.metadata)
+      console.log(el,"eldata")
         return {
         metadata:JSON.parse(el.metadata),
         token_id:el.token_id
