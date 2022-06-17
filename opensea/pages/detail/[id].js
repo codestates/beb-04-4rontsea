@@ -16,11 +16,16 @@ const Main = styled.main`
 `;
 
 const Section = styled.div`
+
   text-align: center;
 `;
-
+const SubSection = styled.div`
+ flex-direction: column;
+ display:flex;
+ align-items: center;
+`  
 const Frame = styled.div`
-  padding: 120px 0px 60px 0px;
+  padding: 120px 0px 0px 0px;
   margin: 0 auto;
   display: inline-block;
   text-align: center;
@@ -41,10 +46,11 @@ const Image_Name = styled.div`
   color: #ffff;
   font-size: 2em;
   font-weight: 600;
+  
 `;
 
 const Text_Layout = styled.div`
-  margin: 0px 120px;
+  margin: 30px 120px;
   display: flex;
   flex-direction: column;
 `;
@@ -62,18 +68,27 @@ const Text_Layout_title = styled.div`
   padding-top: 20px;
 `;
 
-const Creater = styled.span`
+const Creater = styled.div`
   // 메인컬러
+  
   color: #08b7ff;
   border: 1px solid #08b7ff;
-  border-radius: 20px;
-  margin-left: 10px;
-  padding: 0.5em;
+  border-radius: 10px;
+  padding: 1em;
   transition: 0.5s;
+  margin-top: 20px;
+  max-width: 80%;
   :hover {
     color: #00f4e9;
     border: 1px solid #00f4e9;
   }
+`;
+const Tokenid = styled(Creater)`
+  margin-left: 10px;
+  margin-top: 8px;
+  padding: 0.5em 1em;
+  transition: 0.5s;
+  max-width: 100%;
 `;
 
 const DescriptionLayout_span = styled.span`
@@ -82,9 +97,21 @@ const DescriptionLayout_span = styled.span`
 `;
 
 const P = styled.p`
-  margin-left: 10px;
-`;
 
+  margin-left: 10px;
+  :hover {
+    color: #00f4e9;
+    border: 1px solid #00f4e9;
+  }
+`;
+const By = styled.p`
+color: #ffff;
+  font-size: 1.5em;
+  font-weight: 600;
+  margin:0;
+  margin-bottom:5px;
+  
+`
 export default function Home() {
   const [nftlist, setNftlist] = useState([]);
   const router = useRouter();
@@ -135,13 +162,19 @@ const UpdataAt = nftlist[0]?.updatedAt
           <Frame>
             <Image src={imgSrc}></Image>
             <Image_Name>{Name}</Image_Name>
+            
           </Frame>
+          <SubSection>
+         
+          <Creater> <By>MinterAdress</By> {creterAdress}</Creater>
+      
+          </SubSection>
         </Section>
         <Text_Layout>
           <Text_Layout_Section>
             <Text_Layout_title>
               <DescriptionLayout_span>{Desc}</DescriptionLayout_span>
-              <Creater>By {creterAdress}</Creater>
+              
             </Text_Layout_title>
             <P>
               Collection of 10,000 Primates facilitating a seamless adoption of
@@ -152,12 +185,12 @@ const UpdataAt = nftlist[0]?.updatedAt
           <Text_Layout_Section>
             <Text_Layout_title>
               <DescriptionLayout_span>Details</DescriptionLayout_span>
-              <Creater>Owned by {creterAdress}</Creater>
+              
               <a
                 href={`https://etherscan.io/address/${TokenId}`}
                 target="_blank"
               >
-                <Creater>{ TokenId}</Creater>
+                <Tokenid>{ `TokenId :${TokenId}`}</Tokenid>
               </a>
             </Text_Layout_title>
             <P>Sale ends {UpdataAt}</P>

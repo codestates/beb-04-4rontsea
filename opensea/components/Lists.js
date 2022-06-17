@@ -53,6 +53,7 @@ export const Lists = () => {
   const Web3Api = useMoralisWeb3Api();
     useEffect(()=>{
     if(Web3Api=== undefined) return
+    console.log(Web3Api)
     setIsloading(true)
     fetchSearchNFTs(Web3Api)
     .then((nfts)=>{
