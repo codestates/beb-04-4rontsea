@@ -17,7 +17,8 @@ npm i
 
 <img width="1000" alt="image" src="https://user-images.githubusercontent.com/16380369/174250937-d7d586a6-2b2c-4326-bf7b-45dd468daeb2.png">
 <img width="1000" alt="image" src="https://user-images.githubusercontent.com/16380369/174251072-db6aef32-c05d-43db-a11e-735601cb9c12.png">
-<img width="600" alt="image" src="https://user-images.githubusercontent.com/16380369/174251072-db6aef32-c05d-43db-a11e-735601cb9c12.png">
+<img width="1000" alt="image" src="https://user-images.githubusercontent.com/16380369/174251729-ad56fd5c-db53-467f-b6c7-ca3790d4cb21.png">
+
 
 
 
