@@ -44,7 +44,9 @@ export default function MintNFT() {
   const [name, setName] = useState("4rontsea")
   const [desc, setDesc] = useState("This is a 4frontsea NFT")
 
-  const [currentUser, setCurrentUser] = useState("");
+  const [currentUser, setCurrentUser] = useState("")
+  const [tx, setTx] = useState("")
+  const openSeaURL = "https://testnets.opensea.io/collection/frontsea-nft"
 
   const connectWallet = async () => {
     try {
@@ -101,6 +103,7 @@ export default function MintNFT() {
           console.log(currentUser, metadata.url);
           const txn = await contract.mintNFT(currentUser, metadata.url);
           console.log(txn);
+          setTx("https://rinkeby.etherscan.io/tx/" + txn.hash)
         }
         catch (error) {
           console.log(error);
@@ -116,6 +119,7 @@ export default function MintNFT() {
         {
           !currentUser ? (
           <div onClick={connectWallet}>
+              Please connect your wallet: 
               <Btn>
                 <FontAwesomeIcon icon={faWallet} />
               </Btn>
@@ -127,6 +131,14 @@ export default function MintNFT() {
             <div>{`Your Address: ${currentUser}`}</div>
             <form>
               <div>
+                <div>
+                  <label>이름</label>
+                  <input onChange={(e) => setName(e.target.value)} type="text" value={name} required />
+                </div>
+                <div>
+                  <label>설명</label>
+                  <textarea onChange={(e) => setDesc(e.target.value)} value={desc} required />
+                </div>
                 <label>파일업로드</label>
                 <input onChange={uploadImage} type="file" accept="image/*" required></input>
                 {
@@ -135,15 +147,11 @@ export default function MintNFT() {
                     : null
                 }
               </div>
-              <div>
-                <label>이름</label>
-                <input onChange={(e) => setName(e.target.value)} type="text" value={name} required />
-              </div>
-              <div>
-                <label>설명</label>
-                <textarea onChange={(e) => setDesc(e.target.value)} value={desc} required />
-              </div>
-              { metadata === null ? "Upload Image please" : <button onClick={mint}>발행</button> }
+              { metadata === null ? "Upload Image please": <button onClick={mint}>발행</button> }
+              { tx ? < >
+                      <div>Your <a href={tx} target="_blank" rel="noreferrer noopener">transaction (CLICK ME)</a></div>
+                      <div>Check out the <a href={openSeaURL} target="_blank" rel="noreferrer noopener">testnet opensea (CLICK ME)</a></div>
+                    </ > : null }
             </form>
           </>
           )

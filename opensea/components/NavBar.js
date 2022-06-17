@@ -2,12 +2,12 @@ import Link from "next/link";
 //https://www.kindacode.com/article/how-to-use-font-awesome-icons-in-next-js/ nextJS fontawesome 참고
 // NextJS styled-components https://record22.tistory.com/128
 import styled from "styled-components";
-import {useMoralis} from "react-moralis"
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faWallet } from "@fortawesome/free-solid-svg-icons";
-import {fetchSearchNFTs} from "./SearchCollection"
-import useEffect from "react";
-import { useMoralisWeb3Api } from "react-moralis";
+// import {useMoralis} from "react-moralis"
+// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+// import { faWallet } from "@fortawesome/free-solid-svg-icons";
+// import {fetchSearchNFTs} from "./SearchCollection"
+// import useEffect from "react";
+// import { useMoralisWeb3Api } from "react-moralis";
 const Header = styled.header`
   top: 0;
   z-index: 1000;
@@ -60,28 +60,28 @@ const Btn = styled.a`
 `;
 
 export const NavBar = () => {
-  const { authenticate, isAuthenticated, isAuthenticating, user, account, logout } = useMoralis();
-  const Web3Api = useMoralisWeb3Api();
+  // const { authenticate, isAuthenticated, isAuthenticating, user, account, logout } = useMoralis();
+  // const Web3Api = useMoralisWeb3Api();
  
 
-  const login = async () => {
-    if (!isAuthenticated) {
+  // const login = async () => {
+  //   if (!isAuthenticated) {
 
-      await authenticate({signingMessage: "Log in using Moralis" })
-        .then(function (user) {
-          console.log("logged in user:", user);
-          console.log(user.get("ethAddress"));
-        })
-        .catch(function (error) {
-          console.log(error);
-        });
-    }
-  }
+  //     await authenticate({signingMessage: "Log in using Moralis" })
+  //       .then(function (user) {
+  //         console.log("logged in user:", user);
+  //         console.log(user.get("ethAddress"));
+  //       })
+  //       .catch(function (error) {
+  //         console.log(error);
+  //       });
+  //   }
+  // }
 
-  const logOut = async () => {
-    await logout();
-    console.log("logged out");
-  }
+  // const logOut = async () => {
+  //   await logout();
+  //   console.log("logged out");
+  // }
   
 
   return (
@@ -96,12 +96,12 @@ export const NavBar = () => {
           <Link href="/mintNFT">
             <Btn primary>Create</Btn>
           </Link>
-          <div onClick={login}>
+          {/* <div onClick={login}>
             <Btn>
               <FontAwesomeIcon icon={faWallet} />
             </Btn>
           </div>
-          <div onClick={async()=>{fetchSearchNFTs(Web3Api)}}>민트 실행</div>
+          <div onClick={async()=>{fetchSearchNFTs(Web3Api)}}>민트 실행</div> */}
         </Menu>
       </Nav>
     </Header>
