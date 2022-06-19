@@ -38,12 +38,13 @@ export default function MintNFT() {
   const NFT_STORAGE_TOKEN = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJkaWQ6ZXRocjoweDNmNDdkN0ZBNzkzRDBlMzI5ZWFkMUJkNjJmOTY4MDkwNTQxNUMzRDYiLCJpc3MiOiJuZnQtc3RvcmFnZSIsImlhdCI6MTY1NTI3MjgzMTYzNiwibmFtZSI6IjRyb250c2VhIn0.mhrf7qoKsQoQozV8FaooTTtubzizxkI8vt6cf9CJqjU'
 
   const [isImageUploaded, setImageUploaded] = useState(false)
+  const [isdataURL, setdataURL] = useState("");
   const [loading, setLoading] = useState(false)
   const [metadata, setMetadata] = useState(null)
   
   const [name, setName] = useState("4rontsea")
   const [desc, setDesc] = useState("This is a 4frontsea NFT")
-
+  
   const [currentUser, setCurrentUser] = useState("")
   const [tx, setTx] = useState("")
   const openSeaURL = "https://testnets.opensea.io/collection/frontsea-nft"
@@ -65,12 +66,14 @@ export default function MintNFT() {
 
   const uploadImage = async (f) => {
     console.log("image uploaded!", f.target.files[0])
-    setImageUploaded(f.target.files[0]);
-
+  setImageUploaded(f.target.files[0]);
+console.log(isImageUploaded, "이미지")
     try {
       const client = new NFTStorage({ token: NFT_STORAGE_TOKEN })
-      const imageFile = new File([ f.target.files[0] ], 'nft.png', { type: 'image/png' })
-
+     const imageFile = new File([ f.target.files[0] ], 'nft.png', { type: 'image/png' })
+     const imgURL = URL.createObjectURL(f.target.files[0])
+     setdataURL(imgURL);
+     console.log(imgURL,"이미지이빈다")
       console.log("Sending NFT to IPFS")
       setLoading(true)
 
@@ -79,7 +82,7 @@ export default function MintNFT() {
         description: desc,
         image: imageFile
       })
-
+     //bafybeibgfe2owpvqod6os7uix2nvbpv2u42wxw4a6np6gh47pstyghk32a/nft.png path이름
       setLoading(false)
       console.log("Completed sending NFT to IPFS", metadata)
       console.log(metadata.url)
@@ -88,6 +91,7 @@ export default function MintNFT() {
       console.log("Error: ", e)
     }
   }
+  
   
   const mint = async (e) => {
     e.preventDefault();
@@ -115,6 +119,7 @@ export default function MintNFT() {
     <div>
       <NavBar />
       <div>
+        <div>
         <h1>NFT 발행</h1>
         {
           !currentUser ? (
@@ -156,6 +161,28 @@ export default function MintNFT() {
           </>
           )
         }
+      </div>
+      </div>
+      <div style={{
+        height: '50%',
+        width: '50%',}
+      }>
+        <img src={isdataURL}/>
+   {/* {loading ?metadata.data.image.pathname?.map((metadata, index) => {
+                return (
+                  <div key={index}>
+                        <img
+                          src={metadata.image
+                          }
+                          style={{
+                            maxHeight: "300px",
+                            maxWidth: "300px",
+                          }}
+                        ></img>
+                   
+                  </div>
+                );
+              }):null } */}
       </div>
     </div>
   );
