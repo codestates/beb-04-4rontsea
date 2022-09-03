@@ -147,7 +147,7 @@ export default function Home() {
       .catch((error)=>console.log(error))
   },[])
   console.log(nftlist,"nftlist")
-   const imgSrc =nftlist[0]?.metadata.image.replace("ipfs://ipfs/","https://ipfs.moralis.io:2053/ipfs/").replace("ipfs://","https://ipfs.moralis.io:2053/ipfs/")
+const imgSrc =nftlist[0]?.metadata.image.replace("ipfs://ipfs/","https://ipfs.moralis.io:2053/ipfs/").replace("ipfs://","https://ipfs.moralis.io:2053/ipfs/")
 const Name = nftlist[0]?.metadata_name
 const Desc = nftlist[0]?.metadata_description
 const creterAdress = nftlist[0]?.minter_address
